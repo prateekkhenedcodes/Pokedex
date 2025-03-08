@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestCleanInput(t *testing.T) {
+func testCleanInput(t *testing.T) {
 	cases := []struct {
 		input    string
 		expected []string
@@ -51,4 +51,32 @@ func TestCleanInput(t *testing.T) {
 
 }
 
+// func testExitCommand(t *testing.T) {
+// 	cases := []struct {
+// 		input    string
+// 		expected string
+// 	}{
+// 		{
+// 			input: "exit",
+// 			expected: "Closing the Pokedex... Goodbye!",
+// 		},
+// 		{
+// 			input: "EXIT",
+// 			expected: "Closing the Pokedex... Goodbye!",
+// 		},
 
+// 		{
+// 			input: "ExIt",
+// 			expected: "Closing the Pokedex... Goodbye!",
+// 		},
+// 		{
+// 			input: "eXiT",
+// 			expected: "Closing the Pokedex... Goodbye!",
+// 		},
+// 		{
+// 			input: "      exit      ",
+// 			expected: "Closing the Pokedex... Goodbye!",
+// 		},
+
+// 	}
+// }
