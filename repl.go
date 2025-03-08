@@ -46,6 +46,7 @@ type cliCommand struct {
 	callback    func() error
 }
 
+var pokedexConfig = &config{}
 var commands map[string]cliCommand
 
 func init() {
@@ -53,13 +54,22 @@ func init() {
 		"exit": {
 			name:        "exit",
 			description: "Exit the Pokedex",
-			callback:    commandExit,
+			callback: func() error {
+				return commandExit(pokedexConfig)
+			},
 		},
 		"help": {
 			name:        "help",
 			description: "Guide for Pokedex",
 			callback: func() error {
-				return commandHelp(commands)
+				return commandHelp(commands, pokedexConfig)
+			},
+		},
+		"map": {
+			name:        "map",
+			description: "20 location area of Pokemon world!",
+			callback: func() error {
+				return commandMap(pokedexConfig)
 			},
 		},
 	}
