@@ -1,11 +1,12 @@
-package pokeapi 
+package pokeapi
 
-type locationAreaResponse struct {
-	Count    int    `json:"count"`
-	Next     string `json:"next"`
-	Previous string `json:"previous"`
+// RespShallowLocations -
+type RespShallowLocations struct {
+	Count    int     `json:"count"`
+	Next     *string `json:"next"`
+	Previous *string `json:"previous"`
 	Results  []struct {
 		Name string `json:"name"`
-		Url  string `json:"url"`
+		URL  string `json:"url"`
 	} `json:"results"`
 }

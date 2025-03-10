@@ -1,50 +1,51 @@
 package main
 
 import (
-	// "fmt"
 	"bufio"
 	"fmt"
 	"os"
 	"strings"
+
 	"github.com/prateekkhenedcodes/pokedex/internal/pokeapi"
 )
 
 type config struct {
-	apiClient pokeapi.Client
-	Next     string
-	Previous string
+	pokeapiClient    pokeapi.Client
+	nextLocationsURL *string
+	prevLocationsURL *string
 }
 
-func startRepl() {
-	scanner := bufio.NewScanner(os.Stdin)
+func startRepl(cfg *config) {
+	reader := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Print("Pokedex > ")
+		reader.Scan()
 
-		scanner.Scan()
-		input := scanner.Text()
-
-		if len(input) == 0 {
+		words := cleanInput(reader.Text())
+		if len(words) == 0 {
 			continue
 		}
 
-		cleanedInput := cleanInput(input)
-		value, exist := commands[cleanedInput[0]]
-		if exist {
-			err := value.callback(pokedexConfig)
+		commandName := words[0]
+
+		command, exists := getCommands()[commandName]
+		if exists {
+			err := command.callback(cfg)
 			if err != nil {
 				fmt.Println(err)
 			}
 			continue
 		} else {
-			fmt.Print("Unknown command\n")
+			fmt.Println("Unknown command")
 			continue
 		}
-
 	}
 }
 
-func cleanInput(input string) []string {
-	return strings.Fields(strings.ToLower(input))
+func cleanInput(text string) []string {
+	output := strings.ToLower(text)
+	words := strings.Fields(output)
+	return words
 }
 
 type cliCommand struct {
@@ -53,32 +54,29 @@ type cliCommand struct {
 	callback    func(*config) error
 }
 
-var pokedexConfig = &config{}
-var commands map[string]cliCommand
-
-func init() {
-	commands = map[string]cliCommand{
-		"exit": {
-			name:        "exit",
-			description: "Exit the Pokedex",
-			callback:    commandExit,
-		},
+func getCommands() map[string]cliCommand {
+	return map[string]cliCommand{
 		"help": {
 			name:        "help",
-			description: "Guide for Pokedex",
+			description: "Displays a help message",
 			callback: func(c *config) error {
-				return commandHelp(commands, pokedexConfig)
+				return commandHelp(getCommands(), &config{})
 			},
 		},
 		"map": {
 			name:        "map",
-			description: "20 location area of Pokemon world!",
-			callback:    commandMap,
+			description: "Get the next page of locations",
+			callback:    commandMapf,
 		},
 		"mapb": {
 			name:        "mapb",
-			description: "20 previous location areas of pokemon world!",
+			description: "Get the previous page of locations",
 			callback:    commandMapb,
+		},
+		"exit": {
+			name:        "exit",
+			description: "Exit the Pokedex",
+			callback:    commandExit,
 		},
 	}
 }
