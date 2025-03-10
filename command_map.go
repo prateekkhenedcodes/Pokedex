@@ -1,11 +1,11 @@
 package main
 
-import ("fmt")
-
+import (
+	"fmt"
+)
 
 func commandMap(cnf *config) error {
-	nextUrl := cnf.Next
-	locationResp, err := cnf.apiClient.ListLocation(&nextUrl)
+	locationResp, err := cnf.apiClient.ListLocation(cnf.Next)
 	if err != nil {
 		return err
 	}
