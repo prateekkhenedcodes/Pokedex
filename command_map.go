@@ -4,8 +4,8 @@ import ("fmt")
 
 
 func commandMap(cnf *config) error {
-	NextUrl := cnf.Next
-	locationResp, err := cnf.apiClient.ListLocation(&NextUrl)
+	nextUrl := cnf.Next
+	locationResp, err := cnf.apiClient.ListLocation(&nextUrl)
 	if err != nil {
 		return err
 	}

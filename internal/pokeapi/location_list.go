@@ -2,14 +2,13 @@ package pokeapi
 
 import (
 	"encoding/json"
-	// "fmt"
 	"io"
 	"net/http"
 )
 
 func (c *Client) ListLocation(pageUrl *string)(locationAreaResponse, error){
 	url := baseUrl + "/location-area"
-	if pageUrl == nil {
+	if pageUrl != nil {
 		url = *pageUrl
 	}
 
