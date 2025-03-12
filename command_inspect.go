@@ -19,30 +19,7 @@ func commandInspect(cnf *config, args ...string) error {
 	fmt.Printf("Weight: %d\n", pokeInfo.Weight)
 	fmt.Println("Stats:")
 	for _, stat := range pokeInfo.Stats {
-		if stat.Stat.Name == "hp" {
-			hp := stat.BaseStat
-			fmt.Printf(" --hp: %d\n", hp)
-		}
-		if stat.Stat.Name == "attack" {
-			attack := stat.BaseStat
-			fmt.Printf(" --attack: %d\n", attack)
-		}
-		if stat.Stat.Name == "defense" {
-			defense := stat.BaseStat
-			fmt.Printf(" --defense: %d\n", defense)
-		}
-		if stat.Stat.Name == "special-attack" {
-			special_attack := stat.BaseStat
-			fmt.Printf(" --special-attack: %d\n", special_attack)
-		}
-		if stat.Stat.Name == "special-defense" {
-			special_defense := stat.BaseStat
-			fmt.Printf(" --soecial-defense: %d\n", special_defense)
-		}
-		if stat.Stat.Name == "speed" {
-			speed := stat.BaseStat
-			fmt.Printf(" --speed: %d\n", speed)
-		}
+		fmt.Printf("  -%s: %v\n", stat.Stat.Name, stat.BaseStat)
 	}
 	fmt.Println("Types:")
 	poketype := pokeInfo.Types
